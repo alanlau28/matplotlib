@@ -2961,8 +2961,17 @@ class _AxesBase(martist.Artist):
                 x_values = np.array([point for line in self.get_lines()
                                     for point in line.get_xdata()])
                 if len(x_values[x_values < 0]) != 0:
-                    ii_x_g0 = np.min(np.where(x_values > 0))
-                    x0 = min(x_values[ii_x_g0:] - (margin * x_values[ii_x_g0:]))
+                    idx = np.min(np.where(x_values > 0))
+                    x0 = min(x_values[idx:])
+                    x0 -= (margin * x0)
+            elif self.get_yscale() == 'log' and name == 'x':
+                margin = 0.25
+                y_values = np.array([point for line in self.get_lines()
+                                    for point in line.get_ydata()])
+                if len(y_values[y_values < 0]) != 0:
+                    idx = np.min(np.where(y_values > 0))
+                    x0 = min(y_values[idx:])
+                    x0 -= (margin * x0)
             set_bound(x0, x1)
             # End of definition of internal function 'handle_single_axis'.
 
