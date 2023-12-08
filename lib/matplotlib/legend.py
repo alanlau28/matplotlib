@@ -983,6 +983,10 @@ class Legend(Artist):
                 if len(hoffsets):
                     for offset in transOffset.transform(hoffsets):
                         offsets.append(offset)
+                if isinstance(artist, PolyCollection):
+                    paths = artist.get_paths()
+                    for path in paths:
+                        lines.append(artist.get_transform().transform_path(path))
 
         return bboxes, lines, offsets
 
