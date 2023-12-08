@@ -987,6 +987,8 @@ class Legend(Artist):
                     paths = artist.get_paths()
                     for path in paths:
                         lines.append(artist.get_transform().transform_path(path))
+            elif isinstance(artist, Text):                
+                bboxes.append(artist.get_window_extent())
 
         return bboxes, lines, offsets
 
