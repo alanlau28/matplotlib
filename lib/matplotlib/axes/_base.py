@@ -2955,6 +2955,14 @@ class _AxesBase(martist.Artist):
 
             if not self._tight:
                 x0, x1 = locator.view_limits(x0, x1)
+
+            if self.get_xscale() == 'log' and name == 'y':
+                margin = 0.25
+                x_values = np.array([point for line in self.get_lines()
+                                    for point in line.get_xdata()])
+                if len(x_values[x_values < 0]) != 0:
+                    ii_x_g0 = np.min(np.where(x_values > 0))
+                    x0 = min(x_values[ii_x_g0:] - (margin * x_values[ii_x_g0:]))
             set_bound(x0, x1)
             # End of definition of internal function 'handle_single_axis'.
 
