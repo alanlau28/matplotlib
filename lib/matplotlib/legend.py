@@ -983,6 +983,8 @@ class Legend(Artist):
                 if len(hoffsets):
                     for offset in transOffset.transform(hoffsets):
                         offsets.append(offset)
+            elif isinstance(artist, Text):                
+                bboxes.append(artist.get_window_extent())
 
         return bboxes, lines, offsets
 
